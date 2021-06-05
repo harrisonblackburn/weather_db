@@ -24,10 +24,40 @@ function getApi(city) {
       })
 }
 
+function fiveDayWeather(cityForecast) {
+    let request = 'https://api.openweathermap.org/data/2.5/forecast?q=' + cityForecast +'&units=imperial&APPID=8b50af280b34989ae4a92a4a03f30c01';
+    fetch(request)
+    .then (function (res){
+        return res.json();
+    })
+    .then(function (data){
+        console.log(data);
+
+    let tableColumn = document.createElement('tc');
+
+    tableColumn.innerHTML = 
+
+    `<td> Temp:  ${data.list[1].main.temp} F</td>
+    <td> Humidity: ${data.list[1].main.humidity} % </td>
+    <td> Wind Speed: ${data.list[1].wind.speed} MPH </td>`;
+
+ forecastTable.append(tableColumn);
+    
+    })
+}
+
+
+
 $(document).on('click', '#userInputCityButton', function (){
     var userInputCityEl = document.getElementById('userInputCity').value;
    
     getApi(userInputCityEl)
+}); 
+
+$(document).on('click', '#forecastButton', function (){
+    var forecastCityEl = document.getElementById('forecastCity').value;
+   
+    fiveDayWeather(forecastCityEl)
 }); 
 
 
