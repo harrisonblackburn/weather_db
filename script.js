@@ -32,19 +32,11 @@ function fiveDayWeather(cityForecast) {
     })
     .then(function (data){
         console.log(data);
-
-    let tableColumn = document.createElement('tc');
-
-    tableColumn.innerHTML = 
-
-    `<td> Temp:  ${data.list[1].main.temp} F</td>
-    <td> Humidity: ${data.list[1].main.humidity} % </td>
-    <td> Wind Speed: ${data.list[1].wind.speed} MPH </td>`;
-
- forecastTable.append(tableColumn);
-    
+        
     })
-}
+};
+
+
 
 
 
