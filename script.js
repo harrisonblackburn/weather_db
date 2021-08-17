@@ -36,6 +36,50 @@ function fiveDayWeather(cityForecast) {
     })
 };
 
+function displayFiveDayWeather(dataListItems) {
+
+    // console log to see what data is attached
+    console.log(dataListItems);
+
+    // create an array to hold days for weather
+    var cleanFiveDays = [];
+
+    // for loop that takes the weather only at 0 hours, so that it returns only for days not every 3 hours
+    for (var i = 0; i < dataListItems.length; i++) {
+        if (dataListItems[i].dt_txt.split(" ")[1] === "00:00:00") {
+            cleanFiveDays.push(dataListItems[i]);
+        }
+    }
+
+    // console log just to see whats happening
+    console.log(cleanFiveDays);
+
+    // empty the five day cards for new input
+    fiveDayForecastCardsEl.innerHTML = "";
+
+    // create five cards to display weather each day
+    for (var i = 0; i < cleanFiveDays.length; i++) {
+
+        // concatenate the image file name with the url for image thumbnails
+        // ERROR Fixed: api calls must use HTTPS not HTTP, browser requires it to be more secure
+        var weatherIconVariable = "https://openweathermap.org/img/w/" +
+            cleanFiveDays[i].weather[0].icon + ".png";
+
+        // create the cards
+        var card = `<div class="card text-white bg-primary mb-3" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">${cleanFiveDays[i].dt_txt.split(" ")[0]}</h5>
+          <p class="card-text"><img alt='cardweatherdetails' src='${weatherIconVariable}'></img><br>
+          Temp: ${cleanFiveDays[i].main.temp} F<br
+          >Humidity: ${cleanFiveDays[i].main.humidity}%</p>
+        </div>
+      </div>`;
+
+        //   write the data to the page, += so it adds each time and doesn't erase itself
+        fiveDayForecastCardsEl.innerHTML += card;
+    }
+}
+
 
 
 
@@ -49,7 +93,7 @@ $(document).on('click', '#userInputCityButton', function (){
 $(document).on('click', '#forecastButton', function (){
     var forecastCityEl = document.getElementById('forecastCity').value;
    
-    fiveDayWeather(forecastCityEl)
+    displayFiveDayWeather(forecastCityEl)
 }); 
 
 
